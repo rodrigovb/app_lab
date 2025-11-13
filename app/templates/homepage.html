@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Generador de Certificados</h1>
+
+    <form action="{{ url_for('homepage') }}" method="GET" class="search-form">
+        <input 
+            type="search" 
+            name="q" 
+            placeholder="Buscar por nombre de evento..." 
+            value="{{ search_query or '' }}"
+        >
+        <button type="submit">Buscar</button>
+    </form>
+
+    <h2>Últimos Eventos</h2>
+    <ul class="event-list">
+        {% for evento in eventos %}
+            <li>
+                <a href="{{ url_for('pagina_evento', event_id=evento.id) }}">
+                    {% if evento.afiche_img %}
+                        <div class="event-poster-container">
+                            <img src="{{ url_for('static', filename=evento.afiche_img) }}" alt="Afiche de {{ evento.nombre }}" class="event-poster">
+                        </div>
+                    {% endif %}
+                    
+                    <div class="event-info">
+                        <h3>{{ evento.nombre }}</h3>
+                        <p class="event-date">{{ evento.fecha }}</p>
+                    </div>
+                </a>
+            </li>
+        {% else %}
+            <li>
+                <div class="event-info">
+                    <h3>No se encontraron eventos</h3>
+                    <p class="event-date">Intenta con otro término de búsqueda o recarga la página.</p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

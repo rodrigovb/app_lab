@@ -1,0 +1,228 @@
+/* --- style.css --- */
+
+/* 1. CONFIGURACIÓN GLOBAL Y RESET */
+:root {
+  /* Paleta de Colores */
+  --color-fondo: #1a1a1a;
+  --color-superficie: #2a2a2a; /* Para "cards" o elementos elevados */
+  --color-input: #333;
+  --color-borde: #555;
+  --color-texto-principal: #e0e0e0;
+  --color-texto-titulo: #ffffff;
+  --color-acento: #58a6ff; /* Un azul claro y moderno */
+  --color-acento-hover: #4a90e2;
+  --color-error-fondo: #5a1d1d;
+  --color-error-texto: #fce8e8;
+  --color-error-borde: #a83232;
+
+  /* Tipografía */
+  --fuente-principal: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  
+  /* Layout */
+  --radio-borde: 5px;
+  --sombra-suave: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--fuente-principal);
+  background-color: var(--color-fondo);
+  color: var(--color-texto-principal);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 2. LAYOUT PRINCIPAL (CONTENEDOR) */
+.container {
+  width: 90%;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+/* 3. TIPOGRAFÍA (Elegante y Minimalista) */
+h1, h2, h3 {
+  color: var(--color-texto-titulo);
+  font-weight: 300;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+h1 { font-size: 2.25rem; }
+h2 { font-size: 1.75rem; }
+p { margin-bottom: 1rem; }
+a {
+  color: var(--color-acento);
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+a:hover {
+  color: var(--color-acento-hover);
+  text-decoration: underline;
+}
+
+/* 4. FORMULARIOS (Clave para la UX) */
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin-top: 1.5rem;
+}
+
+label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--color-texto-titulo);
+}
+
+input[type="email"],
+input[type="search"] {
+  padding: 12px 15px;
+  font-size: 1rem;
+  background-color: var(--color-input);
+  color: var(--color-texto-principal);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  margin-bottom: 1.5rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="email"]:focus,
+input[type="search"]:focus {
+  outline: none;
+  border-color: var(--color-acento);
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2);
+}
+
+button {
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-texto-titulo);
+  background-color: var(--color-acento);
+  border: none;
+  border-radius: var(--radio-borde);
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: var(--color-acento-hover);
+}
+
+/* 5. GRILLA DE EVENTOS (Estilo "Card" con Afiche) */
+.event-list {
+  list-style: none;
+  padding: 0;
+}
+
+.event-list li {
+  background-color: var(--color-superficie);
+  border-radius: var(--radio-borde);
+  margin-bottom: 1rem;
+  box-shadow: var(--sombra-suave);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.event-list li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.event-list li a {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  color: var(--color-texto-principal);
+  text-decoration: none;
+  gap: 1rem;
+}
+
+.event-poster-container {
+  width: 80px;
+  height: 80px;
+  min-width: 80px;
+  border-radius: var(--radio-borde);
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.event-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.event-info {
+  flex-grow: 1;
+}
+
+.event-info h3 {
+  margin-bottom: 0.25rem;
+  font-size: 1.1rem;
+}
+
+.event-date {
+  font-size: 0.85rem;
+  color: var(--color-borde);
+  margin-bottom: 0;
+}
+
+/* 6. MENSAJES FLASH (Errores y Alertas) */
+.flash-message {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: var(--radio-borde);
+  font-weight: 500;
+  background-color: var(--color-error-fondo);
+  color: var(--color-error-texto);
+  border: 1px solid var(--color-error-borde);
+}
+
+/* 7. FORMULARIO DE BÚSQUEDA */
+.search-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  margin-top: 1rem;
+}
+
+input[type="search"] {
+  flex-grow: 1; 
+  margin-bottom: 0; /* Anula el margen de los inputs generales */
+}
+
+.search-form button {
+  flex-shrink: 0; 
+}
+
+/* 8. MEDIA QUERIES (Responsive) */
+@media (min-width: 768px) {
+  html {
+    font-size: 17px;
+  }
+  h1 {
+    font-size: 2.75rem;
+  }
+  .event-poster-container {
+    width: 120px;
+    height: 120px;
+  }
+  .event-info h3 {
+    font-size: 1.3rem;
+  }
+}

@@ -1,0 +1,19 @@
+# Framework principal y servidor de producción
+Flask
+gunicorn
+
+# Base de datos (ORM + Driver de CockroachDB)
+Flask-SQLAlchemy
+sqlalchemy-cockroachdb
+
+# Utilidades de la App
+Flask-Limiter       # Para el rate limiting
+reportlab           # Para generar los PDFs
+keyring             # Para la gestión de secrets en local
+
+# Scripting de datos (setup_database.py)
+pandas              # Para leer el archivo .csv
+
+# DevSecOps (Para tu pipeline de GitHub Actions)
+snyk                # Escáner de seguridad
+flake8              # Linter de código Python
