@@ -15,5 +15,4 @@ keyring             # Para la gestión de secrets en local
 pandas              # Para leer el archivo .csv
 
 # DevSecOps (Para tu pipeline de GitHub Actions)
-snyk                # Escáner de seguridad
-flake8              # Linter de código Python
+
