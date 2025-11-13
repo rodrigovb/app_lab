@@ -1,33 +1,22 @@
 import os
-import keyring
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
-# --- Lógica Híbrida de "Secrets" ---
-KEYRING_SERVICE_NAME = "flask-certificados"
-
-def get_secret(key_name):
-    """
-    Intenta obtener el secret desde el keyring local.
-    Si falla, lo busca en las variables de entorno (para producción).
-    """
-    secret = keyring.get_password(KEYRING_SERVICE_NAME, key_name)
-    if secret is None:
-        secret = os.environ.get(key_name)
-    return secret
-
 # --- Creación de la App (Patrón Factory) ---
 app = Flask(__name__)
 
-# Configurar "secrets"
-app.config['SECRET_KEY'] = get_secret('SECRET_KEY')
-app.config['SQLALCHEMY_DATABASE_URI'] = get_secret('DATABASE_URL')
+# --- Lógica de "Secrets" (Solo Producción) ---
+# Lee las variables directamente del entorno de Render.
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 
-if not app.config['SECRET_KEY'] or not app.config['SQLALCHEMY_DATABASE_URI']:
-    print("ADVERTENCIA: SECRET_KEY o DATABASE_URL no están configuradas.")
-    print("Asegúrate de guardarlas en keyring localmente o en variables de entorno en producción.")
+# Verificación de que las variables existen en Render
+if not app.config['SECRET_KEY']:
+    print("ADVERTENCIA: La variable de entorno 'SECRET_KEY' no está configurada.")
+if not app.config['SQLALCHEMY_DATABASE_URI']:
+    print("ADVERTENCIA: La variable de entorno 'DATABASE_URL' no está configurada.")
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
