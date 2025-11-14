@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ evento_nombre }}</h1>
+
+    <h2>Generar mi Certificado</h2>
+    <p>Introduce el email con el que te registraste:</p>
+    
+    <form action="{{ url_for('generar_certificado', evento_nombre=evento_nombre) }}" method="POST">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <button type="submit">Generar Certificado</button>
+    </form>
+    
+    <br>
+    <a href="{{ url_for('homepage') }}">Volver a todos los eventos</a>
+{% endblock %}

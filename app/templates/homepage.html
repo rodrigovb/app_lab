@@ -2,13 +2,34 @@
 
 {% block content %}
     <h1>Generador de Certificados</h1>
-    <h2>Kavacon 2023</h2>
 
-    <p>Introduce el email con el que te registraste para generar tu certificado:</p>
-    
-    <form action="{{ url_for('homepage') }}" method="POST">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <button type="submit">Generar Certificado</button>
+    <form action="{{ url_for('homepage') }}" method="GET" class="search-form">
+        <input 
+            type="search" 
+            name="q" 
+            placeholder="Buscar por nombre de evento..." 
+            value="{{ search_query or '' }}"
+        >
+        <button type="submit">Buscar</button>
     </form>
+
+    <h2>Eventos Disponibles</h2>
+    <ul class="event-list">
+        {% for evento in eventos %}
+            <li>
+                <a href="{{ url_for('pagina_evento', evento_nombre=evento) }}">
+                    <div class="event-info">
+                        <h3>{{ evento }}</h3>
+                    </div>
+                </a>
+            </li>
+        {% else %}
+            <li>
+                <div class="event-info">
+                    <h3>No se encontraron eventos</h3>
+                    <p class="event-date">Intenta con otro término de búsqueda.</p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
