@@ -5,11 +5,11 @@ from flask import (
     flash, redirect, url_for, current_app
 )
 from app import app, db, limiter
-from app.models import InscriptosTable  # <-- Importamos el nuevo modelo
+from app.models import InscriptosTable  # <-- Importa el modelo correcto
 from app.utils import generate_pdf_in_memory
 
 @app.route('/', methods=['GET', 'POST'])
-@limiter.limit("5 per minute; 20 per hour") # Protegemos la ruta principal
+@limiter.limit("5 per minute; 20 per hour") # Protege la ruta principal
 def homepage():
     """
     Página principal de la app.
@@ -21,7 +21,7 @@ def homepage():
     if request.method == 'POST':
         email_ingresado = request.form['email']
         
-        # 1. MODIFICADO: Buscamos en 'InscriptosTable' por email
+        # 1. Busca en 'InscriptosTable' por email
         asistente = InscriptosTable.query.filter_by(email=email_ingresado).first()
 
         # 2. Validar
@@ -30,10 +30,11 @@ def homepage():
             return redirect(url_for('homepage')) # Recarga la página
 
         # 3. Generar el PDF
-        nombre_completo = asistente.nombre_completo # Usamos la propiedad del modelo
+        nombre_completo = asistente.nombre_completo # Usa la propiedad del modelo
         
-        # Usamos la plantilla de certificado por defecto
-        template_img_path = "certificado.png" 
+        # --- RUTA DE IMAGEN ACTUALIZADA ---
+        # Apunta a la nueva carpeta app/static/img/
+        template_img_path = "img/certificado.png" 
         
         try:
             # Construye la ruta completa al archivo de plantilla
@@ -56,9 +57,4 @@ def homepage():
         return send_file(
             buffer_pdf,
             mimetype='application/pdf',
-            as_attachment=True,
-            download_name=nombre_archivo_descarga
-        )
-    
-    # Si es un request GET, solo muestra la página de inicio
-    return render_template('homepage.html')
+            as_attachment=
