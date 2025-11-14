@@ -1,27 +1,21 @@
 from app import db
 
-class Evento(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(100), nullable=False, unique=True)
-    fecha = db.Column(db.String(50))
-    template_img = db.Column(db.String(100), nullable=False, default='certificado.png')
-    afiche_img = db.Column(db.String(100), nullable=True) # ej: 'afiches/evento.jpg'
+# Este modelo le dice a SQLAlchemy cómo "ver" tu tabla 'inscriptostable'
+# que ya existe en CockroachDB.
+class InscriptosTable(db.Model):
+    __tablename__ = 'inscriptostable'
     
-    # Relación: Un evento tiene muchos asistentes
-    asistentes = db.relationship('Asistente', backref='evento', lazy=True)
+    # Define las columnas para que coincidan con tu imagen de DBeaver
+    # Necesitamos una Llave Primaria (Primary Key) para que SQLAlchemy funcione.
+    nro_pedido = db.Column(db.BigInteger, primary_key=True) 
+    nombre = db.Column(db.String)
+    apellido = db.Column(db.String)
+    email = db.Column(db.String, index=True) # Ponemos un índice para búsquedas rápidas
+    na = db.Column(db.String)
+    filename = db.Column(db.String)
 
-    def __repr__(self):
-        return f'<Evento {self.nombre}>'
-
-class Asistente(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    nro_pedido = db.Column(db.String(50), nullable=True) # Nro de pedido
-    nombre_completo = db.Column(db.String(200), nullable=False)
-    email = db.Column(db.String(120), nullable=False)
-    filename_ref = db.Column(db.String(255)) # Tu 'filename'
-    
-    # Clave foránea para la relación
-    evento_id = db.Column(db.Integer, db.ForeignKey('evento.id'), nullable=False)
-
-    def __repr__(self):
-        return f'<Asistente {self.nombre_completo}>'
+    # Propiedad útil para obtener el nombre completo
+    @property
+    def nombre_completo(self):
+        # Combina las columnas 'nombre' y 'apellido'
+        return f"{self.nombre} {self.apellido}"
