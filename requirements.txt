@@ -5,6 +5,7 @@ gunicorn
 # Base de datos (ORM + Driver de CockroachDB)
 Flask-SQLAlchemy
 sqlalchemy-cockroachdb
+psycopg2-binary
 
 # Utilidades de la App
 Flask-Limiter       # Para el rate limiting
