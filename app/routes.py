@@ -57,4 +57,9 @@ def homepage():
         return send_file(
             buffer_pdf,
             mimetype='application/pdf',
-            as_attachment=
+            as_attachment=True,
+            download_name=nombre_archivo_descarga
+        )
+    
+    # Si es un request GET, solo muestra la página de inicio
+    return render_template('homepage.html')
