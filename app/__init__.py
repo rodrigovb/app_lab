@@ -22,7 +22,7 @@ db = SQLAlchemy(app)
 limiter = Limiter(
     get_remote_address,  # 1. Pasa 'get_remote_address' como primer argumento
     app=app,             # 2. Pasa 'app' usando su nombre (keyword)
-    default_storage="memory://",
+    default_storage_url="memory://",
     default_limits=["100 per hour", "20 per minute"]
 )
 # --- FIN DE LA CORRECCIÓN ---
