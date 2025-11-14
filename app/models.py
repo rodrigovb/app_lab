@@ -1,18 +1,19 @@
 from app import db
 
 # Este modelo le dice a SQLAlchemy cómo "ver" tu tabla 'inscriptostable'
-# que ya existe en CockroachDB.
 class InscriptosTable(db.Model):
     __tablename__ = 'inscriptostable'
     
-    # Define las columnas para que coincidan con tu imagen de DBeaver
-    # Necesitamos una Llave Primaria (Primary Key) para que SQLAlchemy funcione.
+    # Define las columnas para que coincidan con tu DBeaver
     nro_pedido = db.Column(db.BigInteger, primary_key=True) 
     nombre = db.Column(db.String)
     apellido = db.Column(db.String)
-    email = db.Column(db.String, index=True) # Ponemos un índice para búsquedas rápidas
+    email = db.Column(db.String, index=True)
     na = db.Column(db.String)
     filename = db.Column(db.String)
+    
+    # --- COLUMNA FALTANTE AÑADIDA AQUÍ ---
+    evento = db.Column(db.String, index=True) # Añadimos índice para búsquedas rápidas
 
     # Propiedad útil para obtener el nombre completo
     @property
